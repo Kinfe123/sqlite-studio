@@ -1,0 +1,18 @@
+---
+title: "Core Backend Systems"
+description: "The backend page explains request handling, runtime configuration, data-facing services, and the server-side workflow behind the product."
+order: 130
+---
+
+# Core Backend Systems
+
+The backend page explains request handling, runtime configuration, data-facing services, and the server-side workflow behind the product.
+## Purpose and Scope
+This area owns request handling, runtime configuration, integrations, and data-facing behavior. It is where the product turns input into persistent state, external calls, or responses.
+## What Lives Here
+- `src/main.rs` - Package or runtime entrypoint that pulls the main system together.
+## Operational Shape
+- Route or API entrypoints are detected in 1 file.
+- `RUST_LOG`
+## Related Areas
+- [Build System and Package Structure](/docs/build/package-structure) - The build page explains how the repository is packaged, built, exported, and prepared for local development or distribution.

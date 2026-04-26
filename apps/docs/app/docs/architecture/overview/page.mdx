@@ -1,0 +1,26 @@
+---
+title: "Architecture Overview"
+description: "The architecture page explains the repository as a set of real subsystems so readers can orient themselves before diving into commands, exports, or implementation files."
+order: 120
+---
+
+# Architecture Overview
+
+The architecture page explains the repository as a set of real subsystems so readers can orient themselves before diving into commands, exports, or implementation files.
+## Purpose and Scope
+SQL Studio is easiest to understand when the major subsystems are visible first. This page explains the real runtime areas in the repository, how they connect, and which reader-facing docs pages to use next.
+## Primary Subsystems
+- [Core Backend Systems](/docs/backend/systems) - The backend page explains request handling, runtime configuration, data-facing services, and the server-side workflow behind the product.
+- [Build System and Package Structure](/docs/build/package-structure) - The build page explains how the repository is packaged, built, exported, and prepared for local development or distribution.
+## Runtime Surfaces
+- Frameworks and runtimes appear in this repository through Next.js.
+- Request or route handling is grounded in 1 source file.
+## How The Pieces Fit Together
+- The frontend explains what users or operators see first and which task flows are available in the product.
+- The backend explains how requests, jobs, and integrations turn those UI or API actions into real behavior.
+- The CLI explains how maintainers bootstrap, run, and verify the system locally.
+- The build and deployment surface explains how those pieces are packaged, shipped, and run outside development.
+## Reading Guide
+- Start with the subsystem page that matches the workflow you care about most.
+- Use configuration and API pages only after the subsystem boundary is clear.
+- Keep supporting files grounded in the runtime behavior they explain.
