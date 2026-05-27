@@ -1,0 +1,60 @@
+---
+title: "Quickstart"
+description: "Run SQL Studio for the first time."
+order: 20
+---
+
+# Quickstart
+
+SQL Studio ships with a built-in sample database. You can explore the full UI without pointing it at a real database first.
+
+## Try It Instantly
+
+Run this single command after installing the binary:
+
+```bash
+sql-studio sqlite preview
+```
+
+SQL Studio starts a local server, opens `http://127.0.0.1:3030` in your browser, and loads a sample SQLite database. You'll land on the Overview page showing metadata cards, statistics, and row-count bar charts.
+
+## Open Your Own SQLite File
+
+```bash
+sql-studio sqlite ./my-app.db
+```
+
+## Connect to PostgreSQL
+
+```bash
+sql-studio postgres postgres://user:password@localhost:5432/mydb
+```
+
+## Connect to MySQL
+
+```bash
+sql-studio mysql mysql://user:password@localhost:3306/mydb
+```
+
+## Open a CSV or Parquet File
+
+```bash
+sql-studio csv ./data.csv
+```
+
+```bash
+sql-studio parquet ./dataset.parquet
+```
+
+> **Note:** CSV and Parquet support requires the glibc Linux build, macOS, or Windows. They are not available in the musl (static Linux) build.
+
+## What You'll See
+
+Once SQL Studio opens, the sidebar gives you four pages to work with:
+
+- **Overview** — database metadata, version, size, and per-table statistics.
+- **Table Explorer** — browse every table's schema, row count, and data with infinite scroll.
+- **Query Editor** — write and run SQL against your database using Monaco IntelliSense.
+- **ERD Viewer** — interactive entity-relationship diagram showing tables and foreign-key relationships.
+
+From here, read [Configuration](/docs/configuration) to control the bind address, query timeout, or base path, and [Databases](/docs/databases) for the full argument reference for each supported backend.
