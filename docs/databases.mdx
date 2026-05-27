@@ -1,0 +1,38 @@
+---
+title: "Databases"
+description: "Overview of all databases supported by SQL Studio."
+order: 0
+---
+
+# Databases
+
+SQL Studio supports a wide range of SQL databases and local file formats. Each backend gets its own subcommand with arguments specific to that database.
+
+## Supported Backends
+
+| Database | Subcommand | Type |
+|----------|------------|------|
+| SQLite | `sqlite` | Local file |
+| libSQL | `libsql` | Remote server |
+| Local libSQL | `local-libsql` | Local file (libSQL driver) |
+| PostgreSQL | `postgres` | Remote server |
+| MySQL / MariaDB | `mysql` | Remote server |
+| DuckDB | `duckdb` | Local file |
+| Parquet | `parquet` | Local file |
+| CSV | `csv` | Local file |
+| ClickHouse | `clickhouse` | Remote server |
+| Microsoft SQL Server | `mssql` | Remote server |
+
+## General Syntax
+
+```bash
+sql-studio [OPTIONS] <SUBCOMMAND> [ARGS...]
+```
+
+Global options like `--address`, `--timeout`, and `--base-path` go before the subcommand. See [Configuration](/docs/configuration) for the full option reference.
+
+## Platform Notes
+
+DuckDB, Parquet, and CSV support all depend on the DuckDB native library. These backends are not available in the musl (static Linux) build. Use the glibc Linux build, macOS, or Windows for those file types.
+
+SQL Studio uses `rustls` for TLS across all server-backed drivers, so no separate OpenSSL installation is required.

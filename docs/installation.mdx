@@ -1,0 +1,72 @@
+---
+title: "Installation"
+description: "Install and configure SQL Studio."
+order: 10
+---
+
+# Installation
+
+SQL Studio is distributed as a self-contained binary. Pick the method that fits your environment.
+
+## Shell Script (macOS & Linux)
+
+The fastest path to a working install:
+
+```bash
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/frectonz/sql-studio/releases/download/0.1.51/sql-studio-installer.sh | sh
+```
+
+This downloads the latest release binary and places it on your `PATH`.
+
+## PowerShell (Windows)
+
+Open PowerShell and run the Windows installer published on the releases page. The exact command is listed on the [GitHub releases page](https://github.com/frectonz/sql-studio/releases).
+
+## Nix
+
+SQL Studio is available in Nixpkgs. Add it to your environment the usual way or run it ephemerally with `nix run`.
+
+## Docker
+
+A Docker image is published on Docker Hub as `frectonz/sql-studio`. The example below connects to a PostgreSQL database and exposes the UI on port `3030`:
+
+```bash
+docker run -p 3030:3030 frectonz/sql-studio /bin/sql-studio \
+  --no-browser \
+  --no-shutdown \
+  --address=0.0.0.0:3030 \
+  postgres \
+  postgres://localhost:5432/
+```
+
+When running in Docker you almost always want `--no-browser` (no desktop browser inside a container), `--no-shutdown` (keep the server alive), and `--address=0.0.0.0:3030` (bind to all interfaces so the host can reach the port).
+
+## Building from Source
+
+You need Rust and Node.js installed. The Rust binary statically embeds the compiled UI, so you must build the frontend first:
+
+```bash
+git clone git@github.com:frectonz/sql-studio.git
+cd sql-studio
+cd ui
+npm install
+npm run build
+cd ..
+cargo build --release
+```
+
+The compiled binary lands at `target/release/sql-studio`.
+
+## Updating
+
+If you installed via the shell script or PowerShell installer, re-run the same install command to pull the latest release.
+
+## Verifying the Install
+
+Run the built-in preview to confirm everything is working:
+
+```bash
+sql-studio sqlite preview
+```
+
+SQL Studio should open `http://127.0.0.1:3030` with a sample database loaded. If you see the Overview page, your install is good.
