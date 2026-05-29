@@ -1,0 +1,48 @@
+---
+title: "Quickstart"
+description: "Run SQL Studio for the first time."
+order: 20
+---
+
+# Quickstart
+
+SQL Studio ships with a built-in sample database so you can try it without preparing anything. Install the binary (see [Installation](/docs/installation)), then run one command.
+
+## Try it instantly
+
+```bash
+sql-studio sqlite preview
+```
+
+This launches SQL Studio with a built-in sample SQLite database and opens `http://127.0.0.1:3030` in your browser. You'll land on the Overview page showing database metadata, table counts, and row-count bar charts.
+
+## Use your own SQLite file
+
+```bash
+sql-studio sqlite ./my-database.db
+```
+
+## Connect to a remote database
+
+PostgreSQL, MySQL, and other server-backed databases take a connection URL:
+
+```bash
+sql-studio postgres postgres://user:password@localhost:5432/mydb
+```
+
+```bash
+sql-studio mysql mysql://user:password@localhost:3306/mydb
+```
+
+## What you'll see
+
+Once SQL Studio opens you have four pages in the sidebar:
+
+- **Overview** — database metadata, size, and per-table statistics visualized as bar charts.
+- **Tables** — browse every table with its schema, row count, and paginated data using infinite scroll.
+- **Query** — a Monaco-powered SQL editor with IntelliSense auto-complete against your live schema.
+- **Schema** — an interactive ERD showing tables, columns, types, and foreign-key relationships.
+
+## Next steps
+
+To explore every supported database backend — including DuckDB, Parquet, CSV, ClickHouse, and MSSQL — see [Databases](/docs/databases). To customize the bind address, query timeout, or base path, see [Configuration](/docs/configuration).

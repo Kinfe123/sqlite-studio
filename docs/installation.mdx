@@ -1,0 +1,64 @@
+---
+title: "Installation"
+description: "Install and configure SQL Studio."
+order: 10
+---
+
+# Installation
+
+SQL Studio ships as a self-contained binary that embeds the entire UI. Pick the method that fits your platform.
+
+## Shell Script (macOS and Linux)
+
+The fastest way to get the binary onto your machine:
+
+```bash
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/frectonz/sql-studio/releases/download/0.1.51/sql-studio-installer.sh | sh
+```
+
+After the script completes, `sql-studio --help` should print the available subcommands.
+
+## PowerShell (Windows)
+
+An equivalent installer is available for Windows via PowerShell. Check the [releases page](https://github.com/frectonz/sql-studio/releases) for the current PowerShell one-liner.
+
+## Nix
+
+SQL Studio is packaged in Nixpkgs. If you use Nix, install it through your normal channel or flake workflow.
+
+## Docker
+
+A pre-built image is published on Docker Hub. The example below connects to a local PostgreSQL instance:
+
+```bash
+docker run -p 3030:3030 frectonz/sql-studio /bin/sql-studio \
+  --no-browser \
+  --no-shutdown \
+  --address=0.0.0.0:3030 \
+  postgres \
+  postgres://localhost:5432/
+```
+
+When running in a container, you almost always want `--no-browser` (no desktop to open), `--no-shutdown` (keep the server alive), and `--address=0.0.0.0:3030` (bind to all interfaces so the host can reach it).
+
+## Building from Source
+
+You need Rust and Node.js installed. The Rust binary statically embeds the compiled UI, so you must build the frontend first:
+
+```bash
+git clone git@github.com:frectonz/sql-studio.git
+cd sql-studio
+cd ui
+npm install
+npm run build
+cd ..
+cargo build --release
+```
+
+The compiled binary is at `target/release/sql-studio`.
+
+## Updating
+
+If you installed via the shell script or PowerShell installer, re-running the same install command will replace the binary with the latest release.
+
+> **Note:** DuckDB, Parquet, and CSV support are not available in the musl (static Linux) build due to a DuckDB compatibility limitation. Use the glibc Linux build, macOS, or Windows if you need those backends.
