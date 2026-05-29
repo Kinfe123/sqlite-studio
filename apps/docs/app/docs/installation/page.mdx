@@ -1,0 +1,78 @@
+---
+title: "Installation"
+description: "Install and configure SQL Studio."
+order: 10
+---
+
+# Installation
+
+SQL Studio ships as a prebuilt binary for macOS, Linux, and Windows. Pick the method that fits your environment.
+
+## Shell Script (macOS and Linux)
+
+The fastest way to install the latest release:
+
+```bash
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/frectonz/sql-studio/releases/download/0.1.51/sql-studio-installer.sh | sh
+```
+
+This downloads the binary and places it on your `PATH`. Verify the install:
+
+```bash
+sql-studio --help
+```
+
+## PowerShell (Windows)
+
+Run the following in a PowerShell terminal:
+
+```bash
+irm https://github.com/frectonz/sql-studio/releases/download/0.1.51/sql-studio-installer.ps1 | iex
+```
+
+## Nix
+
+SQL Studio is available in Nixpkgs:
+
+```bash
+nix-env -iA nixpkgs.sql-studio
+```
+
+Or in a flake-based setup, add it to your `devShells` or `environment.systemPackages`.
+
+## Docker
+
+A Docker image is published on Docker Hub at `frectonz/sql-studio`. The following example runs SQL Studio against a PostgreSQL server on port `3030`:
+
+```bash
+docker run -p 3030:3030 frectonz/sql-studio /bin/sql-studio \
+  --no-browser \
+  --no-shutdown \
+  --address=0.0.0.0:3030 \
+  postgres \
+  postgres://localhost:5432/
+```
+
+When running in Docker, always pass `--no-browser` (no desktop browser inside a container), `--no-shutdown` (keep the server alive), and `--address=0.0.0.0:3030` (bind to all interfaces so the host can reach the port).
+
+## Build from Source
+
+You'll need Rust and Node.js installed. The Rust binary statically embeds the compiled frontend, so you must build the UI first:
+
+```bash
+git clone git@github.com:frectonz/sql-studio.git
+cd sql-studio
+cd ui
+npm install
+npm run build
+cd ..
+cargo build --release
+```
+
+The compiled binary is at `target/release/sql-studio`.
+
+> **Note:** DuckDB support (used by the `duckdb`, `parquet`, and `csv` subcommands) is not available in the musl (static Linux) build. Use the glibc Linux build, macOS, or Windows for those backends.
+
+## Updating
+
+If you installed via the shell script or PowerShell installer, re-run the same install command to update to the latest release.
