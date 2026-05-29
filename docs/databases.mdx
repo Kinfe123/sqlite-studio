@@ -1,0 +1,32 @@
+---
+title: "Databases"
+description: "Overview of all databases supported by SQL Studio."
+order: 1
+---
+
+# Databases
+
+SQL Studio supports a wide range of SQL databases and file formats. Each database has its own subcommand with specific arguments. Global options like `--address` and `--timeout` go before the subcommand; database arguments go after it.
+
+```bash
+sql-studio [OPTIONS] <SUBCOMMAND> [ARGS...]
+```
+
+## Supported Databases
+
+| Database | Subcommand | Type |
+|----------|------------|------|
+| SQLite | `sqlite` | Local file |
+| libSQL | `libsql` | Remote server |
+| Local libSQL | `local-libsql` | Local file (libSQL driver) |
+| PostgreSQL | `postgres` | Remote server |
+| MySQL / MariaDB | `mysql` | Remote server |
+| DuckDB | `duckdb` | Local file |
+| Parquet | `parquet` | Local file |
+| CSV | `csv` | Local file |
+| ClickHouse | `clickhouse` | Remote server |
+| Microsoft SQL Server | `mssql` | Remote server |
+
+> **Note:** DuckDB, Parquet, and CSV all depend on the DuckDB native library. They are not available in the musl (static Linux) build. Use the glibc Linux build, macOS, or Windows for those formats.
+
+For global CLI options that apply to every subcommand, see [Configuration](/docs/configuration).

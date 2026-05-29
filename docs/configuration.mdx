@@ -1,0 +1,65 @@
+---
+title: "Configuration"
+description: "Global CLI options, environment variables, and deployment configuration."
+order: 0
+---
+
+# Configuration
+
+All global options must be placed **before** the database subcommand. Environment variables are an alternative to flags — SQL Studio reads both, with flags taking precedence.
+
+```bash
+sql-studio [OPTIONS] <SUBCOMMAND> [ARGS...]
+```
+
+## Global Options
+
+| Option | Short | Description | Default | Env Var |
+|--------|-------|-------------|---------|---------|
+| `--address` | `-a` | Address and port to bind to | `127.0.0.1:3030` | `ADDRESS` |
+| `--timeout` | `-t` | Timeout for queries from the query page | `5secs` | `TIMEOUT` |
+| `--base-path` | `-b` | Base URL path for the UI (e.g. `/sql-studio`) | _(none)_ | `BASE_PATH` |
+| `--no-browser` | | Don't open the URL in the system browser | `false` | `NO_BROWSER` |
+| `--no-shutdown` | | Don't show the shutdown button in the UI | `false` | `NO_SHUTDOWN` |
+
+## Timeout Format
+
+The `--timeout` option accepts human-readable durations. Pass the value as a string: `5secs`, `30secs`, `1min`, `2min 30secs`, and so on.
+
+## Binding to a Custom Address
+
+By default SQL Studio only listens on `127.0.0.1:3030`. To expose it on your network or inside a container, pass a different address:
+
+```bash
+sql-studio --address=0.0.0.0:8080 sqlite ./my.db
+```
+
+## Base Path
+
+If you serve SQL Studio behind a reverse proxy at a sub-path, use `--base-path` so all asset and navigation URLs are prefixed correctly:
+
+```bash
+sql-studio --base-path=/sql-studio sqlite ./my.db
+```
+
+## Deployment Flags
+
+When running in a headless environment such as a Docker container or a remote server, combine `--no-browser` and `--no-shutdown` to prevent the server from trying to open a browser and to keep it alive:
+
+```bash
+sql-studio --no-browser --no-shutdown --address=0.0.0.0:3030 postgres postgres://localhost/mydb
+```
+
+## Environment Variable Reference
+
+Every flag has a corresponding environment variable. This makes SQL Studio easy to configure in Docker Compose files or CI environments without modifying shell scripts.
+
+```bash
+ADDRESS=0.0.0.0:3030
+TIMEOUT=30secs
+BASE_PATH=/sql-studio
+NO_BROWSER=true
+NO_SHUTDOWN=true
+```
+
+> **Note:** `RUST_LOG` controls the verbosity of server-side log output. Set it to `info`, `debug`, or `trace` for more detail during troubleshooting.
