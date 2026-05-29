@@ -1,0 +1,58 @@
+---
+title: "Databases"
+description: "Overview of all databases supported by SQL Studio."
+order: 1
+---
+
+# Databases
+
+SQL Studio supports a wide range of SQL databases and file formats. Each database has its own subcommand with specific connection arguments.
+
+## General Syntax
+
+```bash
+sql-studio [OPTIONS] <SUBCOMMAND> [ARGS...]
+```
+
+Global options like `--address`, `--timeout`, and `--base-path` always go before the subcommand. See [Configuration](/docs/configuration) for details.
+
+## Supported Databases
+
+| Database | Subcommand | Type |
+|---|---|---|
+| SQLite | `sqlite` | Local file |
+| libSQL | `libsql` | Remote server |
+| Local libSQL | `local-libsql` | Local file (libSQL driver) |
+| PostgreSQL | `postgres` | Remote server |
+| MySQL / MariaDB | `mysql` | Remote server |
+| DuckDB | `duckdb` | Local file |
+| Parquet | `parquet` | Local file |
+| CSV | `csv` | Local file |
+| ClickHouse | `clickhouse` | Remote server |
+| Microsoft SQL Server | `mssql` | Remote server |
+
+## Local Files
+
+For local file databases (SQLite, DuckDB, Parquet, CSV), pass the file path as the first argument:
+
+```bash
+sql-studio sqlite ./data/mydb.sqlite
+sql-studio duckdb ./analytics.duckdb
+sql-studio parquet ./dataset.parquet
+sql-studio csv ./export.csv
+```
+
+> **Note:** DuckDB, Parquet, and CSV are not available in the musl (static Linux) build because they depend on DuckDB. Use the glibc Linux build, macOS, or Windows instead.
+
+## Remote Servers
+
+For server databases, pass a connection URL (or individual arguments for ClickHouse and MSSQL):
+
+```bash
+sql-studio postgres postgres://user:password@localhost:5432/mydb
+sql-studio mysql mysql://user:password@localhost:3306/mydb
+sql-studio libsql https://my-db.turso.io my-auth-token
+sql-studio mssql "Server=localhost;Database=mydb;User Id=sa;Password=secret;"
+```
+
+For per-database argument details and options, see the individual pages linked in the sidebar.

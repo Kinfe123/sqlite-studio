@@ -1,0 +1,25 @@
+---
+title: "Features"
+description: "Explore the SQL Studio user interface."
+order: 12
+---
+
+# Features
+
+SQL Studio provides four main UI pages, accessible from the sidebar. Every page is available regardless of which database engine you connect to.
+
+## Overview Dashboard
+
+The Overview page is the landing page when you open SQL Studio. It shows database metadata cards (file name, version, size, creation and modification timestamps) and a row of summary statistics (tables, indexes, triggers, views). Bar charts visualize row counts, column counts, and index counts per table at a glance. See Overview Dashboard for details.
+
+## Table Explorer
+
+The Table Explorer lists every table in the sidebar with its row count. Selecting a table reveals metadata cards, the `CREATE TABLE` SQL, and a scrollable data grid that loads rows on demand with infinite scroll. See Table Explorer for details.
+
+## Query Editor
+
+The Query Editor gives you a full Monaco-based SQL editor — the same editor that powers VS Code — with syntax highlighting and IntelliSense auto-complete drawn from your live database schema. Write a query, run it, and results appear in the grid below. See Query Editor for details.
+
+## ERD Viewer
+
+The ERD Viewer renders an interactive entity-relationship diagram of your schema using React Flow. Tables appear as nodes, columns are listed with types and constraints, and foreign key relationships are drawn as edges. You can pan, zoom, and drag nodes to rearrange the layout. See ERD Viewer for details.

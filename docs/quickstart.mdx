@@ -1,0 +1,54 @@
+---
+title: "Quickstart"
+description: "Run SQL Studio for the first time."
+order: 20
+---
+
+# Quickstart
+
+SQL Studio ships with a built-in sample SQLite database so you can try it with zero setup. One command launches the full UI and opens it in your browser.
+
+## Try It Instantly
+
+```bash
+sql-studio sqlite preview
+```
+
+This loads a built-in sample database and opens `http://127.0.0.1:3030` in your default browser. You'll land on the Overview page showing database metadata, table counts, and bar charts.
+
+## Use Your Own SQLite File
+
+```bash
+sql-studio sqlite ./mydb.sqlite
+```
+
+Replace `./mydb.sqlite` with the path to any `.db` or `.sqlite` file on your machine.
+
+## Connect to a Remote Database
+
+```bash
+sql-studio postgres postgres://user:password@localhost:5432/mydb
+```
+
+The same pattern applies to every supported engine — just swap the subcommand and connection string. See [Databases](/docs/databases) for the full list of subcommands and their arguments.
+
+## What You'll See
+
+Once the UI opens, you'll find four panels in the sidebar:
+
+- **Overview** — file name, database version, size, and row/column/index counts visualized as bar charts.
+- **Tables** — every table with its row count, column list, creation SQL, and a scrollable data grid.
+- **Query** — a Monaco-based SQL editor with IntelliSense auto-complete drawn from your live schema.
+- **Schema** — an interactive ERD diagram showing tables, columns, and foreign key relationships.
+
+## Run Without Opening a Browser
+
+If you're working on a remote server or inside a container, pass `--no-browser`:
+
+```bash
+sql-studio --no-browser sqlite ./mydb.sqlite
+```
+
+Then open `http://127.0.0.1:3030` manually in your browser.
+
+For all available options — address binding, query timeout, base path, and more — see [Configuration](/docs/configuration).
