@@ -1,0 +1,76 @@
+---
+title: "Installation"
+description: "Install and configure SQL Studio."
+order: 10
+---
+
+# Installation
+
+SQL Studio ships as a single self-contained binary. Pick the method that fits your environment — no runtime dependencies are required once the binary is in place.
+
+## Shell script (macOS and Linux)
+
+The fastest way to install on macOS or Linux is the official installer script:
+
+```bash
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/frectonz/sql-studio/releases/download/0.1.51/sql-studio-installer.sh | sh
+```
+
+This downloads the latest prebuilt binary and puts it on your `PATH`.
+
+## PowerShell (Windows)
+
+On Windows, run the installer from a PowerShell prompt. The installer script is linked from the [releases page](https://github.com/frectonz/sql-studio/releases).
+
+## Nix
+
+SQL Studio is available in Nixpkgs. If you use Nix, install it through your normal Nix workflow.
+
+## Docker
+
+A Docker image is published on Docker Hub as `frectonz/sql-studio`. The example below starts SQL Studio connected to a PostgreSQL database and exposes the UI on port `3030`:
+
+```bash
+docker run -p 3030:3030 frectonz/sql-studio /bin/sql-studio \
+  --no-browser \
+  --no-shutdown \
+  --address=0.0.0.0:3030 \
+  postgres \
+  postgres://localhost:5432/
+```
+
+When running in Docker you almost always want these three flags:
+
+- `--no-browser` — there is no desktop browser inside the container
+- `--no-shutdown` — keeps the server running so it isn't stopped from the UI
+- `--address=0.0.0.0:3030` — binds to all interfaces so the host can reach the container port
+
+## Building from source
+
+You need Rust and Node.js installed. The frontend is statically embedded in the binary at build time, so you must build the UI before running `cargo build`:
+
+```bash
+git clone git@github.com:frectonz/sql-studio.git
+cd sql-studio
+cd ui
+npm install
+npm run build
+cd ..
+cargo build --release
+```
+
+The compiled binary lands at `target/release/sql-studio`.
+
+## Updating
+
+If you installed via the shell script or PowerShell installer, re-run the same install command to pull the latest release. Docker users can `docker pull frectonz/sql-studio` to get the newest image.
+
+## Verifying the install
+
+Run the built-in preview mode to confirm everything works:
+
+```bash
+sql-studio sqlite preview
+```
+
+SQL Studio will start and open `http://127.0.0.1:3030` in your browser using a sample database. If the page loads, your install is working correctly.

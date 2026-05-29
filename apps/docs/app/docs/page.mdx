@@ -1,0 +1,30 @@
+---
+title: "Introduction"
+description: "Single binary, single command SQL database explorer. Connect to SQLite, PostgreSQL, MySQL, DuckDB, ClickHouse, MSSQL, Parquet, CSV, and more — no config files required."
+order: 0
+---
+
+# Introduction
+
+SQL Studio is a single-binary, single-command web-based database explorer. Point it at any supported database and you instantly get a rich browser UI for browsing schemas, exploring tables, running queries, and visualising relationships — no config files, no installation wizards, no background services.
+
+The binary embeds the entire frontend. One command starts the server and opens your browser. When you're done, hit the shutdown button or `Ctrl+C`. Nothing lingers.
+
+## Supported databases
+
+SQL Studio speaks ten database dialects out of the box:
+
+- **SQLite** — local `.db` / `.sqlite` files via the `sqlite` subcommand
+- **libSQL** — remote Turso servers via the `libsql` subcommand
+- **Local libSQL** — local SQLite files via the libSQL driver with `local-libsql`
+- **PostgreSQL** — any PostgreSQL-compatible server via the `postgres` subcommand
+- **MySQL / MariaDB** — MySQL and MariaDB servers via the `mysql` subcommand
+- **DuckDB** — local `.duckdb` analytical files via the `duckdb` subcommand
+- **Parquet** — local Apache Parquet files via the `parquet` subcommand
+- **CSV** — local CSV files via the `csv` subcommand
+- **ClickHouse** — ClickHouse analytics servers via the `clickhouse` subcommand (partial support)
+- **Microsoft SQL Server** — MSSQL via ADO.NET connection strings with the `mssql` subcommand
+
+## Where to go next
+
+If you haven't installed SQL Studio yet, head to [Installation](/docs/installation) for every available install method including shell script, Nix, Docker, and building from source. Then follow [Quickstart](/docs/quickstart) to launch the UI for the first time in under a minute. Once you're running, [Configuration](/docs/configuration) covers every CLI flag and its matching environment variable, and [Databases](/docs/databases) has the full connection reference for each supported backend.

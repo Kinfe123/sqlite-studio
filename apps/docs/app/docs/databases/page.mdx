@@ -1,0 +1,123 @@
+---
+title: "Databases"
+description: "Overview of all databases supported by SQL Studio."
+order: 1
+---
+
+# Databases
+
+SQL Studio supports ten database backends and file formats. Each backend has its own subcommand with specific positional arguments. Global options like `--address` and `--timeout` are placed before the subcommand — see [Configuration](/docs/configuration) for details.
+
+## General syntax
+
+```bash
+sql-studio [OPTIONS] <SUBCOMMAND> [ARGS...]
+```
+
+## Supported databases
+
+| Database | Subcommand | Type |
+|----------|------------|------|
+| SQLite | `sqlite` | Local file |
+| libSQL | `libsql` | Remote server |
+| Local libSQL | `local-libsql` | Local file (libSQL driver) |
+| PostgreSQL | `postgres` | Remote server |
+| MySQL / MariaDB | `mysql` | Remote server |
+| DuckDB | `duckdb` | Local file |
+| Parquet | `parquet` | Local file |
+| CSV | `csv` | Local file |
+| ClickHouse | `clickhouse` | Remote server |
+| Microsoft SQL Server | `mssql` | Remote server |
+
+## SQLite
+
+Open a local SQLite database file. Use the special `preview` path to launch with a built-in sample database when you don't have a file handy.
+
+```bash
+sql-studio sqlite ./my-database.db
+sql-studio sqlite preview
+```
+
+## libSQL
+
+Connect to a remote libSQL (Turso) server. Pass the server URL and your auth token.
+
+```bash
+sql-studio libsql https://your-db.turso.io your-auth-token
+```
+
+## Local libSQL
+
+Open a local SQLite file using the libSQL driver. Useful when you need libSQL-specific features on a local file.
+
+```bash
+sql-studio local-libsql ./my-database.db
+```
+
+## PostgreSQL
+
+Connect to any PostgreSQL-compatible server. Use `--schema` to target a schema other than `public`.
+
+```bash
+sql-studio postgres postgres://user:password@localhost:5432/mydb
+sql-studio --schema myschema postgres postgres://user:password@localhost:5432/mydb
+```
+
+The `--schema` option defaults to `public` and can also be set via the `SCHEMA` environment variable.
+
+## MySQL / MariaDB
+
+Connect using a standard MySQL connection URL. SQL Studio uses rustls for TLS, so encrypted connections work out of the box.
+
+```bash
+sql-studio mysql mysql://user:password@localhost:3306/mydb
+```
+
+## DuckDB
+
+Open a local DuckDB analytical database file.
+
+> **Note:** DuckDB support is not available in the musl (static Linux) build. Use the glibc Linux build, macOS, or Windows instead.
+
+```bash
+sql-studio duckdb ./analytics.duckdb
+```
+
+## Parquet
+
+Open a local Apache Parquet file. SQL Studio uses DuckDB under the hood, giving you full SQL access to columnar data.
+
+> **Note:** Parquet support requires the glibc Linux build, macOS, or Windows — not the musl build.
+
+```bash
+sql-studio parquet ./data.parquet
+```
+
+## CSV
+
+Open a local CSV file. SQL Studio uses DuckDB to query it, so you get full SQL access to tabular data.
+
+> **Note:** CSV support requires the glibc Linux build, macOS, or Windows — not the musl build.
+
+```bash
+sql-studio csv ./data.csv
+```
+
+## ClickHouse
+
+Connect to a ClickHouse analytics server. All arguments have sensible defaults, so connecting to a local instance requires no extra arguments.
+
+> **Note:** ClickHouse support is currently partial.
+
+```bash
+sql-studio clickhouse http://localhost:8123 default "" default
+sql-studio clickhouse  # uses all defaults
+```
+
+## Microsoft SQL Server
+
+Connect using an ADO.NET connection string. SQL Studio uses the Tiberius driver with rustls for TLS. For local development with self-signed certificates, add `TrustServerCertificate=true` to your connection string.
+
+```bash
+sql-studio mssql "Server=localhost;Database=mydb;User Id=sa;Password=secret;"
+```

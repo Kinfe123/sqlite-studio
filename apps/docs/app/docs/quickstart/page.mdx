@@ -1,0 +1,63 @@
+---
+title: "Quickstart"
+description: "Run SQL Studio for the first time."
+order: 20
+---
+
+# Quickstart
+
+This page gets you from a fresh install to a running SQL Studio UI with a real database in under a minute.
+
+## Try it instantly
+
+SQL Studio ships with a built-in sample database. The special `preview` path lets you launch the full UI with no setup at all:
+
+```bash
+sql-studio sqlite preview
+```
+
+This creates a temporary SQLite database populated with sample data and opens `http://127.0.0.1:3030` in your browser. You'll land on the Overview dashboard immediately.
+
+## Connect to your own SQLite file
+
+Point SQL Studio at any local `.db` or `.sqlite` file:
+
+```bash
+sql-studio sqlite ./my-database.db
+```
+
+## Connect to a remote database
+
+The same pattern works for every supported backend. Swap the subcommand and pass the appropriate connection string:
+
+```bash
+sql-studio postgres postgres://user:password@localhost:5432/mydb
+```
+
+```bash
+sql-studio mysql mysql://user:password@localhost:3306/mydb
+```
+
+```bash
+sql-studio libsql https://your-db.turso.io your-auth-token
+```
+
+## What you'll see
+
+Once SQL Studio opens you land on the **Overview** page, which shows database metadata (file name, version, size, timestamps) and bar charts summarising row counts, column counts, and index counts per table.
+
+From the sidebar you can navigate to:
+
+- **Tables** — browse every table's schema and scroll through its rows
+- **Query** — write and execute SQL with Monaco IntelliSense powered by your actual schema
+- **Schema** — explore an interactive ERD diagram of all table relationships
+
+## Changing the address or port
+
+By default SQL Studio binds to `127.0.0.1:3030`. Use `--address` to change this before the subcommand:
+
+```bash
+sql-studio --address 0.0.0.0:8080 sqlite ./my-database.db
+```
+
+For the full list of flags and their environment variable equivalents, see [Configuration](/docs/configuration). For detailed connection options per database, see [Databases](/docs/databases).
