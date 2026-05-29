@@ -1,0 +1,66 @@
+---
+title: "Installation"
+description: "Install and configure SQL Studio."
+order: 10
+---
+
+# Installation
+
+SQL Studio ships as a single self-contained binary. Pick the method that fits your environment.
+
+## Shell Script (macOS and Linux)
+
+The fastest way to get the latest release:
+
+```bash
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/frectonz/sql-studio/releases/download/0.1.51/sql-studio-installer.sh | sh
+```
+
+This downloads a prebuilt binary and places it on your `PATH`. After it finishes, run `sql-studio --help` to confirm the install.
+
+## PowerShell (Windows)
+
+A PowerShell installer is available from the same releases page. Download and run the `.ps1` script linked on the [GitHub releases page](https://github.com/frectonz/sql-studio/releases).
+
+## Nix
+
+SQL Studio is available in Nixpkgs. Add it to your environment or shell with your normal Nix workflow.
+
+## Docker
+
+A Docker image is published on Docker Hub as `frectonz/sql-studio`. When running inside a container you typically want three extra flags:
+
+```bash
+docker run -p 3030:3030 frectonz/sql-studio /bin/sql-studio \
+  --no-browser \
+  --no-shutdown \
+  --address=0.0.0.0:3030 \
+  postgres \
+  postgres://localhost:5432/mydb
+```
+
+- `--no-browser` skips opening a browser window (there is none in a container).
+- `--no-shutdown` keeps the server running after the UI's shutdown button would normally stop it.
+- `--address=0.0.0.0:3030` binds to all interfaces so the host can reach port 3030.
+
+## Build from Source
+
+You need Rust and Node.js. The UI is compiled into the binary at build time, so you must build the frontend first:
+
+```bash
+git clone git@github.com:frectonz/sql-studio.git
+cd sql-studio
+cd ui
+npm install
+npm run build
+cd ..
+cargo build --release
+```
+
+The binary is written to `target/release/sql-studio`.
+
+## Updating
+
+If you installed via the shell script or PowerShell installer, re-run the same installer script to update to the latest release.
+
+> **Note:** DuckDB, Parquet, and CSV support depend on the DuckDB native library and are not available in the musl (static Linux) build. Use the glibc Linux build, macOS, or Windows for those formats.
