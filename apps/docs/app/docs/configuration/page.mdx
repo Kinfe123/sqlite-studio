@@ -1,0 +1,69 @@
+---
+title: "Configuration"
+description: "Global CLI options, environment variables, and deployment configuration."
+order: 0
+---
+
+# Configuration
+
+SQL Studio is configured entirely through CLI flags and environment variables — there is no configuration file. Global options must be placed **before** the subcommand name.
+
+```bash
+sql-studio [OPTIONS] <SUBCOMMAND> [ARGS...]
+```
+
+## Global Options
+
+| Option | Short | Description | Default | Env Var |
+|--------|-------|-------------|---------|---------|
+| `--address` | `-a` | Address and port to bind to | `127.0.0.1:3030` | `ADDRESS` |
+| `--timeout` | `-t` | Timeout for queries from the Query page | `5secs` | `TIMEOUT` |
+| `--base-path` | `-b` | Base URL path for the UI (e.g. `/sql-studio`) | _(none)_ | `BASE_PATH` |
+| `--no-browser` | | Don't open a browser window on startup | `false` | `NO_BROWSER` |
+| `--no-shutdown` | | Hide the shutdown button in the UI | `false` | `NO_SHUTDOWN` |
+
+Each option has a corresponding environment variable, so you can configure SQL Studio without passing flags every time.
+
+## Timeout Format
+
+The `--timeout` value accepts human-readable durations. Examples: `5secs`, `30secs`, `1min`, `2min 30secs`. Use longer values when querying large datasets on slow connections.
+
+## Environment Variables
+
+You can set any option via its environment variable instead of a flag:
+
+```bash
+ADDRESS=0.0.0.0:8080
+TIMEOUT=30secs
+NO_BROWSER=true
+NO_SHUTDOWN=true
+BASE_PATH=/sql-studio
+```
+
+The `RUST_LOG` variable controls server-side log verbosity. Set it to `debug` or `info` to see request logs:
+
+```bash
+RUST_LOG=info
+```
+
+## Examples
+
+Bind to all interfaces on port 8080 without opening a browser:
+
+```bash
+sql-studio --address 0.0.0.0:8080 --no-browser sqlite ./app.db
+```
+
+Serve the UI under a sub-path (useful behind a reverse proxy):
+
+```bash
+sql-studio --base-path /sql-studio postgres postgres://localhost:5432/mydb
+```
+
+Raise the query timeout for heavy analytical queries:
+
+```bash
+sql-studio --timeout 60secs duckdb ./warehouse.duckdb
+```
+
+> **Note:** Options like `--no-browser` and `--no-shutdown` are particularly useful when running SQL Studio in Docker or behind a reverse proxy. See [Installation](/docs/installation) for the recommended Docker invocation.
