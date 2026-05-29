@@ -1,0 +1,70 @@
+---
+title: "Installation"
+description: "Install and configure SQL Studio."
+order: 10
+---
+
+# Installation
+
+SQL Studio ships as a self-contained binary with no runtime dependencies. Pick the method that suits your platform.
+
+## Shell Script (macOS and Linux)
+
+The fastest way to get the latest release:
+
+```bash
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/frectonz/sql-studio/releases/download/0.1.51/sql-studio-installer.sh | sh
+```
+
+After the script completes, `sql-studio` is on your `PATH` and ready to use.
+
+## PowerShell (Windows)
+
+Open a PowerShell terminal and run the installer from the same releases page. The installer places the binary in a location already on your `PATH`.
+
+## Nix
+
+SQL Studio is available in Nixpkgs. Add it to your environment or run it directly with `nix run`.
+
+## Docker
+
+A Docker image is published on Docker Hub as `frectonz/sql-studio`. The recommended flags when running in a container are `--no-browser` (no desktop browser inside a container), `--no-shutdown` (keep the server alive), and `--address=0.0.0.0:3030` (bind to all interfaces so the host can reach it):
+
+```bash
+docker run -p 3030:3030 frectonz/sql-studio /bin/sql-studio \
+  --no-browser \
+  --no-shutdown \
+  --address=0.0.0.0:3030 \
+  postgres \
+  postgres://localhost:5432/mydb
+```
+
+## Building from Source
+
+You need Rust (via `cargo`) and Node.js installed. The UI is compiled separately and then embedded in the Rust binary at build time.
+
+```bash
+git clone git@github.com:frectonz/sql-studio.git
+cd sql-studio
+cd ui
+npm install
+npm run build
+cd ..
+cargo build --release
+```
+
+The compiled binary lands at `target/release/sql-studio`.
+
+> **Note:** DuckDB-backed formats (DuckDB, Parquet, CSV) are not available in the `musl` static Linux build due to DuckDB's compatibility requirements. Use the glibc Linux build, macOS, or Windows for those subcommands.
+
+## Updating
+
+If you installed via the shell script or the PowerShell installer, re-run the same install command to pull the latest release. Docker users can `docker pull frectonz/sql-studio` to get the newest image.
+
+Once installed, confirm everything works by running:
+
+```bash
+sql-studio --help
+```
+
+You should see the list of subcommands and global options. From here, jump to the [Quickstart](/docs/quickstart) to launch your first session.

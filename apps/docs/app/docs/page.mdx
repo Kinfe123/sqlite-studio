@@ -1,0 +1,21 @@
+---
+title: "Introduction"
+description: "Single binary, single command SQL database explorer for SQLite, PostgreSQL, MySQL, DuckDB, ClickHouse, MSSQL, Parquet, CSV, and more."
+order: 0
+---
+
+# Introduction
+
+SQL Studio is a single-binary, single-command web-based SQL database explorer. Point it at any supported database and you instantly get a rich browser UI for browsing schemas, exploring tables, running queries, and visualizing relationships — no configuration files, no installation wizards, no daemon to manage.
+
+The entire UI is statically embedded in the binary. You run one command, a browser window opens, and you're looking at your data. When you're done, click the shutdown button or press `Ctrl+C`.
+
+SQL Studio supports SQLite, libSQL (Turso), PostgreSQL, MySQL/MariaDB, DuckDB, ClickHouse, Microsoft SQL Server, Parquet files, and CSV files. Every database has its own subcommand:
+
+```bash
+sql-studio sqlite my-database.db
+sql-studio postgres postgres://localhost:5432/mydb
+sql-studio parquet data.parquet
+```
+
+If you're ready to install, head to [Installation](/docs/installation). To run SQL Studio for the first time in under a minute, see the [Quickstart](/docs/quickstart). Once it's running, the [Features](/docs/features) section explains every UI page. To connect a specific database, the [Databases](/docs/databases) section has a dedicated page for each supported engine.

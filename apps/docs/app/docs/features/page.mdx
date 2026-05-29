@@ -1,0 +1,19 @@
+---
+title: "Features"
+description: "Explore the SQL Studio user interface."
+order: 12
+---
+
+# Features
+
+SQL Studio provides four main UI pages, all accessible from the left sidebar once the server is running. Every page works against any supported database — the same UI surfaces whether you're browsing a SQLite file, a PostgreSQL server, or a Parquet dataset.
+
+## Pages
+
+**Overview Dashboard** is the landing page. It shows database metadata — file name, version, size, creation and modification timestamps — plus summary statistics (table count, index count, trigger count, view count) and bar charts that break row counts and column counts down per table.
+
+**Table Explorer** lists every table in the sidebar with its row count. Selecting a table shows metadata cards, the `CREATE TABLE` statement, and a data grid that loads rows on demand via infinite scroll.
+
+**Query Editor** gives you a full Monaco editor (the same engine as VS Code) with SQL syntax highlighting and IntelliSense autocomplete powered by your live database schema. Write your query and run it to see paginated results.
+
+**ERD Viewer** renders an interactive entity-relationship diagram with tables as nodes, columns annotated with types and constraints, and foreign-key edges connecting related tables. You can pan, zoom, and drag nodes to rearrange the layout.

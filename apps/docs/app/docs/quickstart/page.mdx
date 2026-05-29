@@ -1,0 +1,50 @@
+---
+title: "Quickstart"
+description: "Run SQL Studio for the first time."
+order: 20
+---
+
+# Quickstart
+
+SQL Studio ships with a built-in sample SQLite database so you can try the full UI without any setup. Install the binary (see [Installation](/docs/installation)), then run:
+
+```bash
+sql-studio sqlite preview
+```
+
+This launches SQL Studio against a built-in sample database and opens `http://127.0.0.1:3030` in your default browser. You'll land on the Overview page with database metadata, table counts, and row-count bar charts — no file required.
+
+## Use Your Own Database
+
+Point SQL Studio at a local SQLite file you already have:
+
+```bash
+sql-studio sqlite ./my-app.db
+```
+
+Or connect to a running PostgreSQL server:
+
+```bash
+sql-studio postgres postgres://localhost:5432/mydb
+```
+
+The subcommand determines the driver. Every other supported database works the same way — see [Databases](/docs/databases) for the full list and connection string formats.
+
+## What You'll See
+
+Once the browser opens you'll find four pages in the left sidebar:
+
+- **Overview** — database name, version, size, and summary statistics
+- **Tables** — row counts, column definitions, creation SQL, and an infinite-scroll data grid for every table
+- **Query** — a Monaco-powered SQL editor with IntelliSense autocomplete backed by your live schema
+- **Schema** — an interactive ERD diagram showing tables, columns, and foreign-key relationships
+
+## Controlling the Server
+
+By default SQL Studio binds to `127.0.0.1:3030` and opens a browser window automatically. You can change this with global flags placed *before* the subcommand:
+
+```bash
+sql-studio --address 0.0.0.0:8080 --no-browser sqlite ./my-app.db
+```
+
+See [Configuration](/docs/configuration) for the full list of options and their equivalent environment variables.
