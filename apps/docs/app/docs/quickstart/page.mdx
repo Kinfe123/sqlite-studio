@@ -1,0 +1,54 @@
+---
+title: "Quickstart"
+description: "Run SQL Studio for the first time."
+order: 20
+---
+
+# Quickstart
+
+This page gets you from a fresh install to a running SQL Studio UI in under a minute. You'll use the built-in sample database so there's nothing to set up.
+
+## Try the Sample Database
+
+SQL Studio ships with a built-in preview database. Run this single command after installing:
+
+```bash
+sql-studio sqlite preview
+```
+
+SQL Studio starts the server on `http://127.0.0.1:3030` and opens that URL in your browser automatically. You'll land on the Overview dashboard showing metadata, table counts, and row-count charts for the sample data.
+
+## Use Your Own SQLite File
+
+Point SQL Studio at any `.db` or `.sqlite` file on disk:
+
+```bash
+sql-studio sqlite ./my-app.db
+```
+
+## Connect to a Remote Database
+
+For a PostgreSQL server, pass the connection URL:
+
+```bash
+sql-studio postgres postgres://user:password@localhost:5432/mydb
+```
+
+MySQL and MariaDB work the same way:
+
+```bash
+sql-studio mysql mysql://user:password@localhost:3306/mydb
+```
+
+## What You'll See
+
+Once the UI opens you have four pages available from the sidebar:
+
+- **Overview** — database metadata, version, size, and bar charts of per-table statistics.
+- **Tables** — browse every table, its schema, row count, and paginated data with infinite scroll.
+- **Query** — a Monaco-powered SQL editor with IntelliSense autocomplete drawn from your live schema.
+- **Schema** — an interactive ERD diagram showing tables, columns, and foreign-key relationships.
+
+## Next Steps
+
+See [Databases](/docs/databases) for the full list of supported backends and their connection arguments. If you need to change the bind address, set a query timeout, or run behind a reverse proxy, check [Configuration](/docs/configuration).

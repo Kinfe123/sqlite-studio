@@ -1,0 +1,83 @@
+---
+title: "Configuration"
+description: "Global CLI options, environment variables, and deployment configuration."
+order: 0
+---
+
+# Configuration
+
+All global options must be placed **before** the database subcommand. The general command shape is:
+
+```bash
+sql-studio [OPTIONS] <SUBCOMMAND> [ARGS...]
+```
+
+Every option also has a corresponding environment variable, so you can configure SQL Studio without repeating flags in scripts or containers.
+
+## Global Options
+
+| Option | Short | Description | Default | Env Var |
+|---|---|---|---|---|
+| `--address` | `-a` | Address and port to bind to | `127.0.0.1:3030` | `ADDRESS` |
+| `--timeout` | `-t` | Timeout for queries from the query page | `5secs` | `TIMEOUT` |
+| `--base-path` | `-b` | Base URL path for the UI (e.g. `/sql-studio`) | _(none)_ | `BASE_PATH` |
+| `--no-browser` | | Don't open the URL in the system browser | `false` | `NO_BROWSER` |
+| `--no-shutdown` | | Don't show the shutdown button in the UI | `false` | `NO_SHUTDOWN` |
+
+## Timeout Format
+
+The `--timeout` option accepts human-readable durations. Any of the following are valid:
+
+```bash
+sql-studio --timeout 30secs sqlite ./app.db
+sql-studio --timeout 1min sqlite ./app.db
+sql-studio --timeout "2min 30secs" sqlite ./app.db
+```
+
+## Binding to All Interfaces
+
+By default, SQL Studio binds to `127.0.0.1:3030` — localhost only. To expose it on the network (for example, inside a container or VM), bind to `0.0.0.0`:
+
+```bash
+sql-studio --address 0.0.0.0:3030 sqlite ./app.db
+```
+
+## Base Path
+
+If you're serving SQL Studio behind a reverse proxy at a sub-path, use `--base-path` to set the URL prefix so assets and navigation links resolve correctly:
+
+```bash
+sql-studio --base-path /sql-studio postgres postgres://localhost:5432/mydb
+```
+
+## Environment Variables
+
+You can set any option via environment variable instead of a flag. This is useful in Docker Compose or CI environments:
+
+```bash
+ADDRESS=0.0.0.0:8080
+TIMEOUT=30secs
+NO_BROWSER=true
+NO_SHUTDOWN=true
+BASE_PATH=/sql-studio
+```
+
+For verbose server logging, set `RUST_LOG`:
+
+```bash
+RUST_LOG=debug
+```
+
+## Deployment Example
+
+A typical production-style invocation with all flags explicit:
+
+```bash
+sql-studio \
+  --address 0.0.0.0:3030 \
+  --timeout 30secs \
+  --no-browser \
+  --no-shutdown \
+  postgres \
+  postgres://user:password@db-host:5432/mydb
+```
