@@ -1,0 +1,70 @@
+---
+title: "Configuration"
+description: "Global CLI options, environment variables, and deployment configuration."
+order: 0
+---
+
+# Configuration
+
+All global options are placed **before** the database subcommand. Every option also has a matching environment variable so you can configure SQL Studio in containerised or automated environments without modifying your start command.
+
+```bash
+sql-studio [OPTIONS] <SUBCOMMAND> [ARGS...]
+```
+
+## Global CLI options
+
+| Option | Short | Description | Default | Env var |
+|--------|-------|-------------|---------|---------|
+| `--address` | `-a` | Address and port to bind to | `127.0.0.1:3030` | `ADDRESS` |
+| `--timeout` | `-t` | Timeout for queries from the query page | `5secs` | `TIMEOUT` |
+| `--base-path` | `-b` | Base URL path for the UI (e.g. `/sql-studio`) | _(none)_ | `BASE_PATH` |
+| `--no-browser` | | Don't open the URL in the system browser | `false` | `NO_BROWSER` |
+| `--no-shutdown` | | Don't show the shutdown button in the UI | `false` | `NO_SHUTDOWN` |
+
+## Timeout format
+
+The `--timeout` option accepts human-readable durations. For example: `5secs`, `30secs`, `1min`, `2min 30secs`. The timeout applies to queries executed from the Query page — it does not affect table browsing or schema loading.
+
+## Base path
+
+Use `--base-path` when you're serving SQL Studio behind a reverse proxy at a subpath. For example, `--base-path /sql-studio` makes the UI available at `http://your-host/sql-studio` instead of the root.
+
+## Logging
+
+SQL Studio reads the `RUST_LOG` environment variable for log verbosity. Set it before running the binary:
+
+```bash
+RUST_LOG=debug sql-studio sqlite ./my-database.db
+```
+
+Useful values are `error`, `warn`, `info`, and `debug`.
+
+## Examples
+
+Bind to a custom port and suppress the browser auto-open:
+
+```bash
+sql-studio --address 0.0.0.0:8080 --no-browser sqlite ./my-database.db
+```
+
+Set a longer query timeout for heavy analytical queries:
+
+```bash
+sql-studio --timeout 2min postgres postgres://localhost:5432/analytics
+```
+
+Run behind a reverse proxy at `/studio`:
+
+```bash
+sql-studio --base-path /studio --no-browser --no-shutdown postgres postgres://localhost:5432/mydb
+```
+
+You can equally export the environment variables instead of passing flags:
+
+```bash
+ADDRESS=0.0.0.0:8080
+NO_BROWSER=true
+NO_SHUTDOWN=true
+TIMEOUT=2min
+```

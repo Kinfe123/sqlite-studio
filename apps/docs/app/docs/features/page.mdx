@@ -1,0 +1,25 @@
+---
+title: "Features"
+description: "Explore the SQL Studio user interface."
+order: 2
+---
+
+# Features
+
+SQL Studio provides four main UI pages accessible from the sidebar. Each page is available for every supported database backend with no additional configuration.
+
+## Overview dashboard
+
+The Overview page is the landing page when you open SQL Studio. It shows database metadata cards at the top — file name or connection URL, database version, total size, and creation/modification timestamps when available. Below that, summary cards display the total count of tables, indexes, triggers, and views. Bar charts give you a visual breakdown of row counts, column counts, and index counts across all tables.
+
+## Table Explorer
+
+The Table Explorer lists every table in your database with its row count. Selecting a table shows metadata cards (row count, column count, index count, table size), the full `CREATE TABLE` SQL that defines the schema, and a data grid below. The data grid uses infinite scroll, so you can page through millions of rows without loading them all at once.
+
+## Query Editor
+
+The Query Editor gives you a full Monaco editor — the same engine that powers VS Code — connected directly to your database. You get SQL syntax highlighting, auto-complete suggestions for table names and column names drawn from your live schema, and multi-line editing. Write your query and click Run (or use the keyboard shortcut) to execute it. Results appear in a table below the editor. The query timeout is configurable via `--timeout` — see [Configuration](/docs/configuration).
+
+## ERD Viewer
+
+The ERD Viewer renders an interactive entity-relationship diagram of your entire schema. Tables appear as draggable nodes listing each column with its data type, nullability, and primary key indicator. Foreign key relationships are drawn as edges between tables. The diagram is built with React Flow, so you can pan, zoom, and rearrange nodes freely. An auto-layout button resets the arrangement if things get cluttered.
