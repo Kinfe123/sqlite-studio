@@ -17,6 +17,9 @@ import {
 import { greentree } from "@farming-labs/theme/greentree";
 
 export default defineDocs({
+  analytics: {
+    enabled: true,
+  },
   entry: "docs",
   staticExport: true,
   github: {
